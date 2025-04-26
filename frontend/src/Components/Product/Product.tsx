@@ -5,35 +5,31 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { Product } from "../Types/products";
 
-interface Product {
-  id: string;
-  name: string;
-  qty: number;
-  price: number;
-  photo: string;
-  categories: string[];
-}
-
-// URL da API
 const API_URL = "http://localhost:3000";
 
-export const Product = () => {
+export const ProductPage = () => {
   const [search, setSearch] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Função para buscar produtos da API
   const fetchProducts = async () => {
     try {
       setLoading(true);
-
-      console.log("Buscando produtos com termo:", search);
-      const response = await axios.get<Product[]>(`${API_URL}/product`, {
+      const response = await axios.get(`${API_URL}/product`, {
         params: { name: search },
       });
 
-      setProducts(response.data);
+      // Converte categorias para o formato correto
+      const formattedProducts = response.data.map((product: any) => ({
+        ...product,
+        categories: product.categories.map((c: string | { id: string }) =>
+          typeof c === "string" ? { id: c } : c
+        ),
+      }));
+
+      setProducts(formattedProducts);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
       toast.error("Não foi possível carregar os produtos");
@@ -42,7 +38,6 @@ export const Product = () => {
     }
   };
 
-  // Função para remover um produto
   const handleRemoveProduct = async (id: string) => {
     try {
       if (window.confirm("Tem certeza que deseja remover este produto?")) {
@@ -67,7 +62,6 @@ export const Product = () => {
   return (
     <main className="p-4">
       <div className="flex justify-around items-center mb-4">
-        {/* Filtro */}
         <Input
           type="text"
           placeholder="Buscar produto..."

@@ -32,7 +32,7 @@ export const ProductCard = ({ product, onRemove }: ProductCardProps) => {
         <p className="text-sm">
           <span className="font-medium">Categorias:</span>{" "}
           {product.categories.length > 0
-            ? product.categories.map((c) => c.id).join(", ")
+            ? product.categories.map((c) => c.name).join(", ")
             : "Nenhuma categoria"}
         </p>
       </div>

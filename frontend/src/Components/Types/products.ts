@@ -4,5 +4,5 @@ export interface Product {
   qty: number;
   price: number;
   photo: string;
-  categories: Array<{ id: string }>;
+  categories: Array<{ name: string }>;
 }
