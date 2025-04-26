@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 interface Product {
   id: string;
-  categories: string[];
+  categories: Array<{ name: string }>;
   name: string;
   qty: number;
   price: number;
@@ -43,7 +43,7 @@ export const ProductCard = ({ product, onRemove }: ProductCardProps) => {
         <p className="text-sm">
           <span className="font-medium">Categorias:</span>{" "}
           {product.categories.length > 0
-            ? product.categories.join(", ")
+            ? product.categories.map((c) => c.name).join(", ")
             : "Nenhuma categoria"}
         </p>
       </div>
