@@ -10,7 +10,7 @@ import { toast } from "react-hot-toast";
 
 import { productFormSchema, ProductFormValues } from "../Types/types";
 import { ProductFormFields } from "../ProductFormFields/FormFields";
-
+import { CategoryFields } from "../ProductCategoryFields/ProductCategoryFields";
 const API_URL = "http://localhost:3000";
 
 export const ProductForm = () => {
@@ -27,10 +27,14 @@ export const ProductForm = () => {
       qty: 0,
       price: 0,
       photo: "",
+      categories: [], // agora tem categories no default
     },
   });
 
-  // Buscar dados do produto para edição
+  const handleAddCategory = () => {
+    form.setValue("categories", [...form.getValues("categories"), { id: "" }]);
+  };
+
   useEffect(() => {
     if (isEditing) {
       setFetchingProduct(true);
@@ -46,6 +50,7 @@ export const ProductForm = () => {
             qty: productData.qty,
             price: productData.price,
             photo: productData.photo || "",
+            categories: productData.categories || [], // carrega também as categorias
           });
         })
         .catch((error) => {
@@ -58,7 +63,6 @@ export const ProductForm = () => {
     }
   }, [id, isEditing, form]);
 
-  // Enviar o formulário (criar ou atualizar produto)
   const onSubmit = async (values: ProductFormValues) => {
     try {
       setLoading(true);
@@ -71,7 +75,6 @@ export const ProductForm = () => {
         toast.success("Produto criado com sucesso!");
       }
 
-      // Redirecionar para a lista de produtos
       navigate("/product");
     } catch (error) {
       console.error("Erro ao salvar produto:", error);
@@ -97,7 +100,11 @@ export const ProductForm = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <ProductFormFields form={form} />
-
+              <CategoryFields
+                form={form}
+                addCategory={handleAddCategory}
+              />{" "}
+              {/* renderiza as categorias */}
               <div className="flex justify-between gap-4 mt-6">
                 <Button
                   type="button"

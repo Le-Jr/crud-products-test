@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   FormField,
   FormItem,
@@ -7,6 +5,8 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { ProductFormValues } from "../Types/types";
