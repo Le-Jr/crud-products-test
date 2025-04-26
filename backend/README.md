@@ -130,9 +130,9 @@ O backend fornece os seguintes endpoints:
 
 ### Categorias 🗂️
 
-- **GET /categories**: Listar todas as categorias.
+- **GET /category**: Listar todas as categorias.
 
-- **POST /categories**: Criar uma nova categoria.
+- **POST /category**: Criar uma nova categoria.
 
 ### Swagger 📚
 
