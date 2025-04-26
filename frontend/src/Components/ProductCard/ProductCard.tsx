@@ -1,16 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import { Product } from "../Types/products";
 
-interface Product {
-  id: string;
-  categories: Array<{ name: string }>;
-  name: string;
-  qty: number;
-  price: number;
-  photo: string;
-}
-
-// Definindo a interface para as props do ProductCard
 interface ProductCardProps {
   product: Product;
   onRemove: () => void;
@@ -19,7 +10,6 @@ interface ProductCardProps {
 export const ProductCard = ({ product, onRemove }: ProductCardProps) => {
   return (
     <div className="border rounded-xl p-4 flex flex-col gap-2 shadow hover:shadow-md transition max-w-2xl">
-      {/* Exibindo a imagem do produto */}
       <img
         src={product.photo}
         alt={product.name}
@@ -38,12 +28,11 @@ export const ProductCard = ({ product, onRemove }: ProductCardProps) => {
         </p>
       </div>
 
-      {/* Exibindo as categorias */}
       <div className="mt-2">
         <p className="text-sm">
           <span className="font-medium">Categorias:</span>{" "}
           {product.categories.length > 0
-            ? product.categories.map((c) => c.name).join(", ")
+            ? product.categories.map((c) => c.id).join(", ")
             : "Nenhuma categoria"}
         </p>
       </div>
