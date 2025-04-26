@@ -1,19 +1,18 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router"; // Corrigindo o import, supondo que você use react-router-dom
+import { Link } from "react-router";
 import { ProductCard } from "../ProductCard/ProductCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-// Definindo a interface para Produto simplificada
 interface Product {
   id: string;
   name: string;
-  description: string;
   qty: number;
   price: number;
   photo: string;
+  categories: string[];
 }
 
 // URL da API
@@ -49,7 +48,7 @@ export const Product = () => {
       if (window.confirm("Tem certeza que deseja remover este produto?")) {
         await axios.delete(`${API_URL}/product/${id}`);
         toast.success("Produto removido com sucesso!");
-        fetchProducts(); // Recarrega a lista após remover
+        fetchProducts();
       }
     } catch (error) {
       console.error("Erro ao remover produto:", error);

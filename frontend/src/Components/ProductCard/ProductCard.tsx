@@ -1,21 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
-// Importando a interface Product (você pode colocar isso em um arquivo separado de tipos)
-interface Category {
-  id: string;
-  parent: Category | null;
-  name: string;
-}
-
 interface Product {
   id: string;
-  categories: Category[];
+  categories: string[];
   name: string;
   qty: number;
   price: number;
   photo: string;
-  description: string;
 }
 
 // Definindo a interface para as props do ProductCard
@@ -29,7 +21,7 @@ export const ProductCard = ({ product, onRemove }: ProductCardProps) => {
     <div className="border rounded-xl p-4 flex flex-col gap-2 shadow hover:shadow-md transition max-w-2xl">
       <h4 className="text-lg font-bold">{product.name}</h4>
 
-      <p className="text-sm text-gray-600">{product.description}</p>
+      {/* <p className="text-sm text-gray-600">{product.description}</p> */}
 
       <div className="mt-2">
         <p className="text-sm">
