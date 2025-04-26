@@ -6,14 +6,12 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-// Definindo a interface para Categoria
 interface Category {
   id: string;
   parent: Category | null;
   name: string;
 }
 
-// Definindo a interface para Produto
 interface Product {
   id: string;
   categories: Category[];
@@ -24,8 +22,6 @@ interface Product {
   description: string;
 }
 
-// Em ambiente de desenvolvimento local usando Docker
-// O backend está rodando na porta 3000 e é acessível pelo host
 const API_URL = "http://localhost:3000";
 
 export const Product = () => {
@@ -33,7 +29,6 @@ export const Product = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Função para buscar produtos da API
   const fetchProducts = async () => {
     try {
       setLoading(true);
@@ -60,7 +55,6 @@ export const Product = () => {
     }
   };
 
-  // Função para remover um produto
   const handleRemoveProduct = async (id: string) => {
     try {
       if (window.confirm("Tem certeza que deseja remover este produto?")) {
@@ -74,7 +68,6 @@ export const Product = () => {
     }
   };
 
-  // Carrega produtos quando o componente é montado e quando a busca muda
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       fetchProducts();
@@ -86,7 +79,6 @@ export const Product = () => {
   return (
     <main className="p-4">
       <div className="flex justify-around items-center mb-4">
-        {/* Filter */}
         <Input
           type="text"
           placeholder="Buscar produto..."
@@ -95,13 +87,11 @@ export const Product = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        {/* Botão Para adicionar novos produtos */}
         <Button variant={"outline"} asChild>
           <Link to="/product/0">Adicionar Produto</Link>
         </Button>
       </div>
 
-      {/* Estado de carregamento */}
       {loading ? (
         <div className="flex justify-center py-8">
           <p>Carregando produtos...</p>

@@ -8,11 +8,9 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-import { productFormSchema, ProductFormValues, Product } from "../Types/types";
+import { productFormSchema, ProductFormValues } from "../Types/types";
 import { ProductFormFields } from "../ProductFormFields/FormFields";
-import { CategoryFields } from "../ProductCategoryFields/ProductCategoryFields";
 
-// Definindo a URL base da API conforme configuração Docker
 const API_URL = "http://localhost:3000";
 
 export const ProductForm = () => {
@@ -29,7 +27,6 @@ export const ProductForm = () => {
       qty: 0,
       price: 0,
       photo: "",
-      categories: [],
     },
   });
 
@@ -41,7 +38,7 @@ export const ProductForm = () => {
       axios
         .get(`${API_URL}/product/${id}`)
         .then((response) => {
-          const productData: Product = response.data;
+          const productData = response.data;
           console.log("Produto carregado:", productData);
 
           form.reset({
@@ -49,7 +46,6 @@ export const ProductForm = () => {
             qty: productData.qty,
             price: productData.price,
             photo: productData.photo || "",
-            categories: productData.categories || [],
           });
         })
         .catch((error) => {
@@ -69,10 +65,7 @@ export const ProductForm = () => {
 
       if (isEditing) {
         // Atualização de produto existente
-        await axios.patch(`${API_URL}/product/${id}`, {
-          ...values,
-          id: id,
-        });
+        await axios.patch(`${API_URL}/product/${id}`, values);
         toast.success("Produto atualizado com sucesso!");
       } else {
         // Criação de novo produto
@@ -84,48 +77,10 @@ export const ProductForm = () => {
       navigate("/product");
     } catch (error) {
       console.error("Erro ao salvar produto:", error);
-
-      if (axios.isAxiosError(error)) {
-        // Log detalhado para ajudar no diagnóstico
-        console.error("Status:", error.response?.status);
-        console.error("Mensagem:", error.message);
-        console.error("Detalhes:", error.response?.data);
-
-        // Mensagem específica com base no tipo de erro
-        if (error.response?.status === 400) {
-          toast.error(
-            "Dados inválidos. Verifique os campos e tente novamente."
-          );
-        } else if (error.response?.status === 404) {
-          toast.error("Produto não encontrado.");
-        } else {
-          toast.error(`Erro ao ${isEditing ? "atualizar" : "criar"} produto`);
-        }
-      } else {
-        toast.error(`Erro ao ${isEditing ? "atualizar" : "criar"} produto`);
-      }
+      toast.error(`Erro ao ${isEditing ? "atualizar" : "criar"} produto`);
     } finally {
       setLoading(false);
     }
-  };
-
-  // Adicionar nova categoria ao formulário
-  const addCategory = () => {
-    const currentCategories = form.getValues("categories");
-    form.setValue("categories", [...currentCategories, { id: "" }]);
-  };
-
-  // Remover categoria do formulário
-  const removeCategory = (index: number) => {
-    const currentCategories = form.getValues("categories");
-    const updatedCategories = [...currentCategories];
-    updatedCategories.splice(index, 1);
-    form.setValue("categories", updatedCategories);
-  };
-
-  // Cancelar e voltar para a lista de produtos
-  const handleCancel = () => {
-    navigate("/product");
   };
 
   return (
@@ -144,17 +99,12 @@ export const ProductForm = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <ProductFormFields form={form} />
-              <CategoryFields
-                form={form}
-                addCategory={addCategory}
-                removeCategory={removeCategory}
-              />
 
               <div className="flex justify-between gap-4 mt-6">
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={handleCancel}
+                  onClick={() => navigate("/product")}
                   className="w-1/2"
                 >
                   Cancelar
