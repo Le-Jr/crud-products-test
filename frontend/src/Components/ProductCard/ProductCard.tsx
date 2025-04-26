@@ -19,9 +19,14 @@ interface ProductCardProps {
 export const ProductCard = ({ product, onRemove }: ProductCardProps) => {
   return (
     <div className="border rounded-xl p-4 flex flex-col gap-2 shadow hover:shadow-md transition max-w-2xl">
-      <h4 className="text-lg font-bold">{product.name}</h4>
+      {/* Exibindo a imagem do produto */}
+      <img
+        src={product.photo}
+        alt={product.name}
+        className="w-full h-64 object-cover rounded-md"
+      />
 
-      {/* <p className="text-sm text-gray-600">{product.description}</p> */}
+      <h4 className="text-lg font-bold mt-2">{product.name}</h4>
 
       <div className="mt-2">
         <p className="text-sm">
@@ -30,6 +35,16 @@ export const ProductCard = ({ product, onRemove }: ProductCardProps) => {
         </p>
         <p className="text-sm">
           <span className="font-medium">Qtd. em estoque:</span> {product.qty}
+        </p>
+      </div>
+
+      {/* Exibindo as categorias */}
+      <div className="mt-2">
+        <p className="text-sm">
+          <span className="font-medium">Categorias:</span>{" "}
+          {product.categories.length > 0
+            ? product.categories.join(", ")
+            : "Nenhuma categoria"}
         </p>
       </div>
 
