@@ -7,10 +7,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
 import { productFormSchema, ProductFormValues } from "../Types/types";
 import { ProductFormFields } from "../ProductFormFields/FormFields";
 import { CategoryFields } from "../ProductCategoryFields/ProductCategoryFields";
+
 const API_URL = "http://localhost:3000";
 
 export const ProductForm = () => {
@@ -67,11 +67,19 @@ export const ProductForm = () => {
     try {
       setLoading(true);
 
+      // Enviar apenas os IDs das categorias
+      const categories = values.categories.map((category) => category.id);
+
+      const productData = {
+        ...values,
+        categories, // Envia apenas os IDs das categorias
+      };
+
       if (isEditing) {
-        await axios.patch(`${API_URL}/product/${id}`, values);
+        await axios.patch(`${API_URL}/product/${id}`, productData);
         toast.success("Produto atualizado com sucesso!");
       } else {
-        await axios.post(`${API_URL}/product`, values);
+        await axios.post(`${API_URL}/product`, productData);
         toast.success("Produto criado com sucesso!");
       }
 
