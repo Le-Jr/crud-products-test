@@ -1,98 +1,147 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Backend - Hard Skill Test
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descrição
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Este é o backend do projeto **Hard Skill Test**, desenvolvido com **NestJS** e utilizando o banco de dados **PostgreSQL**. O backend fornece as APIs para gerenciar **produtos** e **categorias**, incluindo funcionalidades de criação, leitura, atualização e exclusão (CRUD).
 
-## Description
+A documentação da API está disponível através do **Swagger** na rota `/api` após a inicialização da aplicação.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## Tecnologias Utilizadas
+
+[![My Skills](https://skillicons.dev/icons?i=nest&theme=light)](https://skillicons.dev) - **NestJS**: Framework Node.js para a construção de APIs escaláveis e de fácil manutenção.
+
+[![My Skills](https://skillicons.dev/icons?i=postgresql&theme=light)](https://skillicons.dev)- **PostgreSQL**: Banco de dados relacional utilizado para armazenar as informações de produtos e categorias.
+
+[![My Skills](https://skillicons.dev/icons?i=prisma&theme=light)](https://skillicons.dev)- **Prisma**: ORM para interagir com o banco de dados.
+
+[![My Skills](https://skillicons.dev/icons?i=docker&theme=light)](https://skillicons.dev)- **Docker**: Utilizado para containerizar o backend e facilitar o desenvolvimento.
+
+---
+
+## Estrutura do Projeto
 
 ```bash
-$ npm install
+backend/
+├── dist/                         # Pasta gerada após a compilação do TypeScript
+├── Dockerfile                    # Arquivo de configuração do Docker para o backend
+├── eslint.config.mjs             # Configuração do ESLint
+├── generated/                    # Arquivos gerados pelo Prisma (schema, migrações)
+├── nest-cli.json                 # Configuração do NestJS CLI
+├── node_modules/                 # Dependências do projeto
+├── package.json                  # Dependências do projeto
+├── package-lock.json             # Controle de versão das dependências
+├── prisma/                       # Configurações do Prisma
+│   └── schema.prisma             # Definições do banco de dados com Prisma
+├── README.md                     # Este arquivo
+├── src/                          # Código-fonte da aplicação
+│   ├── app.module.ts             # Módulo principal da aplicação
+│   ├── main.ts                   # Arquivo de entrada da aplicação
+│   ├── categories/               # Módulo de categorias
+│   │   ├── category.controller.ts  # Controlador de categorias
+│   │   ├── category.module.ts     # Módulo de categorias
+│   │   └── category.service.ts    # Serviço de categorias
+│   ├── products/                 # Módulo de produtos
+│   │   ├── product.controller.ts  # Controlador de produtos
+│   │   ├── product.module.ts      # Módulo de produtos
+│   │   └── product.service.ts     # Serviço de produtos
+│   ├── dto/                      # DTOs (fora dos módulos)
+│   │   ├── category.dto.ts        # Data Transfer Object (DTO) de categoria
+│   │   ├── product.dto.ts         # Data Transfer Object (DTO) de produto
+│   │   ├── productpath.dto.ts     # Data Transfer Object (DTO) de caminho de produto
+│   │   └── index.ts               # Arquivo de exportação dos DTOs
+│   ├── prisma/                   # Módulo do Prisma
+│   │   ├── prisma.module.ts      # Módulo do Prisma
+│   │   └── prisma.service.ts     # Serviço do Prisma
+├── test/                         # Arquivos de teste
+│   ├── app.e2e-spec.ts           # Exemplo de teste end-to-end
+│   └── jest-e2e.json             # Configuração do Jest para testes end-to-end
+├── tsconfig.build.json           # Configurações de build do TypeScript
+└── tsconfig.json                 # Configurações principais do TypeScript
+
+
 ```
 
-## Compile and run the project
+---
+
+## Como Rodar o projeto ✅
+
+### 1. Localmente 🖥️
+
+1. **Clonar o repositório**:
+
+   ```bash
+   git clone https://github.com/Le-Jr/crud-products-test.git
+   cd backend
+   ```
+
+2. **Instalar as dependências**
+
+   ```bash
+     npm install
+   ```
+
+3. **Configurar o banco de dados (PostgreSQL):** Certifique-se de que o banco de dados PostgreSQL esteja configurado corretamente e acessível. As credenciais do banco de dados podem ser configuradas no arquivo .env.
+
+4. **Rodar a aplicação**: Para rodar o backend no ambiente de desenvolvimento, use o seguinte comando:
+
+   ```bash
+   npm run start:dev
+   ```
+
+   Isso irá iniciar o servidor na porta 3000 por padrão.
+
+5. **Acessar o Swagger**: A documentação da API gerada pelo Swagger estará disponível na rota /api após a aplicação ser inicializada. Você pode acessar a documentação visitando:
+
+   ```bash
+     http://localhost:3000/api
+   ```
+
+## Usando Docker 🐳
+
+1. **Construir e rodar os containers**: Certifique-se de que o Docker esteja instalado em sua máquina e execute:
+   ```bash
+     docker compose up --build
+   ```
+2. **Acessar o backend**: O backend estará disponível na porta **3000**.
+
+3. **Acessar o Swagger**: A documentação da API estará disponível em:
+
+   ```bash
+     http://localhost:3000/api
+   ```
+
+## Endpoints 🎖️
+
+O backend fornece os seguintes endpoints:
+
+### Produtos 📦
+
+- **GET /products**: Listar todos os produtos.
+
+- **GET /products/:id**: Buscar um produto específico pelo ID.
+
+- **POST /products**: Criar um novo produto.
+
+- **PATCH /products/:id**: Atualizar um produto existente.
+
+- **DELETE /products/:id**: Deletar um produto.
+
+### Categorias 🗂️
+
+- **GET /categories**: Listar todas as categorias.
+
+- **POST /categories**: Criar uma nova categoria.
+
+### Swagger 📚
+
+A documentação da API gerada pelo Swagger está disponível no endpoint /api. Para acessar a documentação interativa, basta inicializar a aplicação e navegar até:
 
 ```bash
-# development
-$ npm run start
 
-# watch mode
-$ npm run start:dev
+http://localhost:3000/api
 
-# production mode
-$ npm run start:prod
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Essa interface permite testar os endpoints diretamente, visualizar os modelos de dados e obter uma visão geral de todos os recursos da API.
