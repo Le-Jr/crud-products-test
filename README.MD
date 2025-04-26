@@ -26,6 +26,8 @@ Este projeto é uma aplicação **CRUD (Create, Read, Update, Delete)** de produ
 
 [![My Skills](https://skillicons.dev/icons?i=docker&theme=light)](https://skillicons.dev)- **Docker**: Utilizado para containerizar o frontend e facilitar o desenvolvimento.
 
+---
+
 ### Backend 🖥️
 
 [![My Skills](https://skillicons.dev/icons?i=nest&theme=light)](https://skillicons.dev) - **NestJS**: Framework Node.js para a construção de APIs escaláveis e de fácil manutenção.
