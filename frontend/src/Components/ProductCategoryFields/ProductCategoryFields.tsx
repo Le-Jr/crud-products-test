@@ -7,17 +7,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { ProductFormValues } from "../Types/types";
 
 interface CategoryFieldsProps {
   form: UseFormReturn<ProductFormValues>;
   addCategory: () => void;
+  removeCategory: (index: number) => void;
 }
 
-export const CategoryFields = ({ form, addCategory }: CategoryFieldsProps) => (
-  <div className="space-y-2">
+export const CategoryFields = ({
+  form,
+  addCategory,
+  removeCategory,
+}: CategoryFieldsProps) => (
+  <div className="space-y-4">
     <FormLabel>Categorias</FormLabel>
     {form.watch("categories").map((_, index) => (
       <FormField
@@ -25,11 +30,24 @@ export const CategoryFields = ({ form, addCategory }: CategoryFieldsProps) => (
         control={form.control}
         name={`categories.${index}.id`}
         render={({ field }) => (
-          <FormItem>
-            <FormControl>
-              <Input placeholder="ID da Categoria" {...field} />
+          <FormItem className="flex items-center justify-between space-x-2">
+            <FormControl className="flex-1">
+              <Input
+                placeholder="ID da Categoria"
+                {...field}
+                className="mr-2"
+              />
             </FormControl>
             <FormMessage />
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="ml-2"
+              onClick={() => removeCategory(index)}
+            >
+              <Trash className="h-4 w-4" />
+            </Button>
           </FormItem>
         )}
       />
