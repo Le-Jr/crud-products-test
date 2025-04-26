@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProductDto } from 'src/dto/product.dto';
+import { UpdateProductDto } from 'src/dto/productpath.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -28,5 +29,36 @@ export class ProductService {
       },
     });
     return user;
+  }
+
+  async findOneProduct(id: string) {
+    const user = await this.prisma.products.findUnique({
+      where: { id: id },
+    });
+
+    return user;
+  }
+
+  async updateProduct(id: string, dto: UpdateProductDto) {
+    const { categories, ...updateData } = dto;
+
+    const updatedProduct = await this.prisma.products.update({
+      where: { id },
+      data: {
+        ...updateData,
+        categories: categories
+          ? // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            { connect: categories.map((category) => ({ id: category.id })) }
+          : undefined,
+      },
+    });
+
+    return updatedProduct;
+  }
+
+  async deleteProduct(id: string) {
+    return this.prisma.products.delete({
+      where: { id },
+    });
   }
 }
