@@ -9,7 +9,7 @@ createRoot(document.getElementById("root")!).render(
     <Routes>
       <Route path="/" element={<Navigate to={"/product"} />} />
       <Route path="/product" element={<Product />} />
-      <Route path="/product/0" element={<ProductForm />} />
+      <Route path="/product/:id" element={<ProductForm />} />
     </Routes>
   </BrowserRouter>
 );
