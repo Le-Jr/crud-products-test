@@ -48,7 +48,11 @@ export class ProductService {
         ...updateData,
         categories: categories
           ? // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            { connect: categories.map((category) => ({ id: category.id })) }
+            {
+              connect: categories.map((category) => ({
+                id: String(category.id),
+              })),
+            }
           : undefined,
       },
     });
