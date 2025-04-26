@@ -1,27 +1,22 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router"; // Corrigindo o import, supondo que você use react-router-dom
 import { ProductCard } from "../ProductCard/ProductCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
-interface Category {
-  id: string;
-  parent: Category | null;
-  name: string;
-}
-
+// Definindo a interface para Produto simplificada
 interface Product {
   id: string;
-  categories: Category[];
   name: string;
+  description: string;
   qty: number;
   price: number;
   photo: string;
-  description: string;
 }
 
+// URL da API
 const API_URL = "http://localhost:3000";
 
 export const Product = () => {
@@ -29,38 +24,32 @@ export const Product = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Função para buscar produtos da API
   const fetchProducts = async () => {
     try {
       setLoading(true);
 
-      console.log("Buscando produtos na URL:", `${API_URL}/product`);
-
+      console.log("Buscando produtos com termo:", search);
       const response = await axios.get<Product[]>(`${API_URL}/product`, {
         params: { name: search },
       });
 
-      console.log("Dados recebidos:", response.data);
       setProducts(response.data);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
-
-      if (axios.isAxiosError(error)) {
-        console.error("Status:", error.response?.status);
-        console.error("Mensagem:", error.message);
-      }
-
       toast.error("Não foi possível carregar os produtos");
     } finally {
       setLoading(false);
     }
   };
 
+  // Função para remover um produto
   const handleRemoveProduct = async (id: string) => {
     try {
       if (window.confirm("Tem certeza que deseja remover este produto?")) {
         await axios.delete(`${API_URL}/product/${id}`);
         toast.success("Produto removido com sucesso!");
-        fetchProducts();
+        fetchProducts(); // Recarrega a lista após remover
       }
     } catch (error) {
       console.error("Erro ao remover produto:", error);
@@ -79,6 +68,7 @@ export const Product = () => {
   return (
     <main className="p-4">
       <div className="flex justify-around items-center mb-4">
+        {/* Filtro */}
         <Input
           type="text"
           placeholder="Buscar produto..."

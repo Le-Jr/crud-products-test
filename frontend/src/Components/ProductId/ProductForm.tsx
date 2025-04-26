@@ -64,11 +64,9 @@ export const ProductForm = () => {
       setLoading(true);
 
       if (isEditing) {
-        // Atualização de produto existente
         await axios.patch(`${API_URL}/product/${id}`, values);
         toast.success("Produto atualizado com sucesso!");
       } else {
-        // Criação de novo produto
         await axios.post(`${API_URL}/product`, values);
         toast.success("Produto criado com sucesso!");
       }
