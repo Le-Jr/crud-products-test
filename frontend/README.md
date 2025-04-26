@@ -1,54 +1,148 @@
-# React + TypeScript + Vite
+# Frontend - Hard Skill Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descrição
 
-Currently, two official plugins are available:
+Este é o frontend do projeto **Hard Skill Test**, desenvolvido com **React e TypeScript** além de **Shadcn UI e TailwindCss** para estilização. O frontend consome as APIs do backend para gerenciar produtos e categorias, permitindo aos usuários visualizar, criar, editar e excluir produtos.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+A interface do usuário foi projetada para ser intuitiva e fácil de usar, com uma navegação clara para gerenciar os produtos e categorias do sistema.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tecnologias Utilizadas
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+[![My Skills](https://skillicons.dev/icons?i=vite&theme=light)](https://skillicons.dev) - **Vite**: Ferramenta de build e desenvolvimento para React com suporte a Hot Module Replacement (HMR).
+
+[![My Skills](https://skillicons.dev/icons?i=react&theme=light)](https://skillicons.dev) - **ReactJs**: Framework Node.js para a construção de APIs escaláveis e de fácil manutenção.Biblioteca JavaScript para construção de interfaces de usuário dinâmicas.
+
+[![My Skills](https://skillicons.dev/icons?i=typescript&theme=light)](https://skillicons.dev)- **TypeScript**: Superset do JavaScript que traz tipagem estática e maior segurança no desenvolvimento
+
+<img width="55" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/shadcn_ui.png" alt="ShadCn UI" title="ShadCn UI"/> - **Shadcn UI**: ShadCN é uma biblioteca de componentes de UI para React, otimizada com Tailwind CSS, que oferece componentes prontos e personalizáveis para criar interfaces modernas e acessíveis.
+
+[![My Skills](https://skillicons.dev/icons?i=tailwind&theme=light)](https://skillicons.dev)- **TailwindCss**: Framework de CSS utilitário para estilização rápida e responsiva
+
+[![My Skills](https://skillicons.dev/icons?i=docker&theme=light)](https://skillicons.dev)- **Docker**: Utilizado para containerizar o frontend e facilitar o desenvolvimento.
+
+---
+
+## Estrutura do Projeto
+
+```bash
+frontend/
+├── assets/                        # Arquivos estáticos, como imagens e fontes
+├── components/                    # Componentes principais e reutilizáveis
+│   ├── FormButton/                # Componente de botão de formulário
+│   ├── Product/                   # Componente principal para o produto
+│   ├── ProductCard/               # Componente para exibição do produto
+│   ├── ProductCategoryFields/     # Campos específicos para a categoria de produto
+│   ├── ProductFormFields/         # Campos específicos do formulário de produto
+│   ├── ProductId/                 # Componente para exibição e manipulação do ID do produto
+│   └── Types/                     # Tipos TypeScript usados nos componentes
+├── components.json                # Arquivo de configuração ou metadados dos componentes
+├── Dockerfile                     # Arquivo de configuração do Docker para o frontend
+├── index.html                     # Arquivo HTML principal da aplicação
+├── lib/                           # Bibliotecas e utilitários auxiliares
+├── main.tsx                       # Componente principal da aplicação
+├── node_modules/                  # Dependências do projeto
+├── package.json                   # Dependências do projeto
+├── package-lock.json              # Controle de versão das dependências
+├── README.md                      # Este arquivo
+├── src/                           # Código-fonte da aplicação
+│   ├── components/                # Componentes específicos da aplicação
+│   ├── index.css                  # Estilos globais da aplicação
+│   ├── lib/                       # Funções e utilitários auxiliares
+│   ├── main.tsx                   # Componente de entrada da aplicação
+│   └── vite-env.d.ts              # Definições de tipo do Vite
+├── tsconfig.app.json              # Configuração do TypeScript para a aplicação
+├── tsconfig.json                  # Configuração principal do TypeScript
+├── tsconfig.node.json             # Configuração do TypeScript para Node.js
+├── vite.config.ts                 # Configuração do Vite para build e desenvolvimento
+
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Como Rodar o projeto ✅
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### 1. Localmente 🖥️
+
+1. **Clonar o repositório**:
+
+   ```bash
+   git clone https://github.com/Le-Jr/crud-products-test.git
+   cd frontend
+   ```
+
+2. **Instalar as dependências**
+
+   ```bash
+     npm install
+   ```
+
+3. **Rodar a aplicação**: Para rodar o backend no ambiente de desenvolvimento, use o seguinte comando:
+
+   ```bash
+   npm run dev
+   ```
+
+   Isso irá iniciar o servidor na porta 5173 por padrão.
+
+4. **Acessar a aplicação**: O frontend estará disponível na URL:
+
+   ```bash
+     http://localhost:5173
+   ```
+
+## Usando Docker 🐳
+
+1. **Construir e rodar os containers**: Certifique-se de que o Docker esteja instalado em sua máquina e execute:
+   ```bash
+     docker compose up --build
+   ```
+2. **Acessar o frontend**: O frontend estará disponível na porta **5173**.
+
+   ```bash
+     http://localhost:5173
+   ```
+
+---
+
+### Funcionalidades 🎯
+
+O frontend interage com a API do backend, proporcionando as seguintes funcionalidades:
+
+#### Produtos 📦
+
+- **Visualizar Produtos**: Exibe todos os produtos cadastrados na aplicação.
+
+- **Criar Produto**: Permite criar novos produtos através de um formulário.
+
+- **Editar Produto**: Permite editar os dados de um produto existente.
+
+- **Deletar Produto**: Permite excluir um produto.
+
+---
+
+## Endpoints da API🎖️
+
+O frontend interage com a API do backend, proporcionando as seguintes funcionalidades:
+
+### Produtos 📦
+
+- **GET /products**: Listar todos os produtos.
+
+- **GET /products/:id**: Buscar um produto específico pelo ID.
+
+- **POST /products**: Criar um novo produto.
+
+- **PATCH /products/:id**: Atualizar um produto existente.
+
+- **DELETE /products/:id**: Deletar um produto.
+
+---
+
+### Considerações finais
+
+Este projeto foi desenvolvido para fornecer uma aplicação simples e eficiente para gerenciar produtos e categorias. A estrutura do frontend utiliza as melhores práticas do **React, TypeScript, Shadcn e Tailwind CSS** para proporcionar uma experiência de usuário fluida e responsiva. Além disso, a integração com a API backend via **endpoints REST** permite um gerenciamento completo das informações.
+
+Para mais informações sobre a API, consulte a documentação do backend disponível em Swagger.
