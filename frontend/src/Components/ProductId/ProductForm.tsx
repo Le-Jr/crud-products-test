@@ -27,12 +27,21 @@ export const ProductForm = () => {
       qty: 0,
       price: 0,
       photo: "",
-      categories: [], // agora tem categories no default
+      categories: [],
     },
   });
 
   const handleAddCategory = () => {
     form.setValue("categories", [...form.getValues("categories"), { id: "" }]);
+  };
+
+  // Função para remover categoria adicionada
+  const handleRemoveCategory = (index: number) => {
+    const currentCategories = form.getValues("categories");
+    form.setValue(
+      "categories",
+      currentCategories.filter((_, i) => i !== index)
+    );
   };
 
   useEffect(() => {
@@ -50,7 +59,8 @@ export const ProductForm = () => {
             qty: productData.qty,
             price: productData.price,
             photo: productData.photo || "",
-            categories: productData.categories || [], // carrega também as categorias
+            // Corrige a estrutura das categorias
+            categories: productData.categories.map((id: string) => ({ id })),
           });
         })
         .catch((error) => {
@@ -67,12 +77,11 @@ export const ProductForm = () => {
     try {
       setLoading(true);
 
-      // Enviar apenas os IDs das categorias
       const categories = values.categories.map((category) => category.id);
 
       const productData = {
         ...values,
-        categories, // Envia apenas os IDs das categorias
+        categories,
       };
 
       if (isEditing) {
@@ -111,8 +120,8 @@ export const ProductForm = () => {
               <CategoryFields
                 form={form}
                 addCategory={handleAddCategory}
-              />{" "}
-              {/* renderiza as categorias */}
+                removeCategory={handleRemoveCategory} // Prop adicionada
+              />
               <div className="flex justify-between gap-4 mt-6">
                 <Button
                   type="button"
