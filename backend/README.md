@@ -82,7 +82,11 @@ backend/
      npm install
    ```
 
-3. **Configurar o banco de dados (PostgreSQL):** Certifique-se de que o banco de dados PostgreSQL esteja configurado corretamente e acessível. As credenciais do banco de dados podem ser configuradas no arquivo .env.
+3. **Configurar o banco de dados (PostgreSQL):** Certifique-se de que o banco de dados PostgreSQL esteja configurado corretamente e acessível. As credenciais do banco de dados podem ser configuradas no arquivo .env(exemplo abaixo)
+
+   ```bash
+   DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/mydb"
+   ```
 
 4. **Rodar a aplicação**: Para rodar o backend no ambiente de desenvolvimento, use o seguinte comando:
 
