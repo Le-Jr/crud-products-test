@@ -11,17 +11,15 @@ const API_URL = "http://localhost:3000";
 
 export const ProductPage = () => {
   const [search, setSearch] = useState("");
-  const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]); // Todos os produtos
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Produtos filtrados
   const [loading, setLoading] = useState(true);
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_URL}/product`, {
-        params: { name: search },
-      });
+      const response = await axios.get(`${API_URL}/product`);
 
-      // Converte categorias para o formato correto
       const formattedProducts = response.data.map((product: any) => ({
         ...product,
         categories: product.categories.map((c: string | { id: string }) =>
@@ -29,7 +27,8 @@ export const ProductPage = () => {
         ),
       }));
 
-      setProducts(formattedProducts);
+      setAllProducts(formattedProducts);
+      setFilteredProducts(formattedProducts);
     } catch (error) {
       console.error("Erro ao buscar produtos:", error);
       toast.error("Não foi possível carregar os produtos");
@@ -38,26 +37,27 @@ export const ProductPage = () => {
     }
   };
 
-  const handleRemoveProduct = async (id: string) => {
-    try {
-      if (window.confirm("Tem certeza que deseja remover este produto?")) {
-        await axios.delete(`${API_URL}/product/${id}`);
-        toast.success("Produto removido com sucesso!");
-        fetchProducts();
-      }
-    } catch (error) {
-      console.error("Erro ao remover produto:", error);
-      toast.error("Não foi possível remover o produto");
-    }
-  };
-
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      fetchProducts();
-    }, 500);
+      const searchTerm = search.toLowerCase().trim();
+
+      const filtered = allProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm)
+      );
+
+      setFilteredProducts(filtered);
+    }, 300);
 
     return () => clearTimeout(timeoutId);
-  }, [search]);
+  }, [search, allProducts]);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  function handleRemoveProduct(id: string): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <main className="p-4">
@@ -79,13 +79,13 @@ export const ProductPage = () => {
         <div className="flex justify-center py-8">
           <p>Carregando produtos...</p>
         </div>
-      ) : products.length === 0 ? (
+      ) : filteredProducts.length === 0 ? (
         <div className="flex justify-center py-8">
           <p>Nenhum produto encontrado</p>
         </div>
       ) : (
         <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
               product={product}
