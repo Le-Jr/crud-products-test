@@ -134,6 +134,8 @@ O backend fornece os seguintes endpoints:
 
 - **POST /category**: Criar uma nova categoria.
 
+---
+
 ### Swagger 📚
 
 A documentação da API gerada pelo Swagger está disponível no endpoint /api. Para acessar a documentação interativa, basta inicializar a aplicação e navegar até:
