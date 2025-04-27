@@ -26,7 +26,7 @@ export const ProductForm = () => {
       name: "",
       qty: 0,
       price: 0,
-      photo: "",
+      photo: undefined, // Alterado para undefined em vez de null ou string vazia
       categories: [],
     },
   });
@@ -35,7 +35,6 @@ export const ProductForm = () => {
     form.setValue("categories", [...form.getValues("categories"), { id: "" }]);
   };
 
-  // Função para remover categoria adicionada
   const handleRemoveCategory = (index: number) => {
     const currentCategories = form.getValues("categories");
     form.setValue(
@@ -58,9 +57,11 @@ export const ProductForm = () => {
             name: productData.name,
             qty: productData.qty,
             price: productData.price,
-            photo: productData.photo || "",
-            // Corrige a estrutura das categorias
-            categories: productData.categories.map((id: string) => ({ id })),
+            photo: productData.photo || undefined, // Usar undefined em vez de null
+            categories:
+              productData.categories?.map((category: any) => ({
+                id: typeof category === "string" ? category : category.id,
+              })) || [],
           });
         })
         .catch((error) => {
@@ -77,11 +78,10 @@ export const ProductForm = () => {
     try {
       setLoading(true);
 
-      const categories = values.categories.map((category) => category.id);
-
       const productData = {
         ...values,
-        categories,
+        categories: values.categories.map((category) => category.id),
+        photo: values.photo || undefined, // Garante que photo seja undefined se vazio
       };
 
       if (isEditing) {
@@ -116,11 +116,12 @@ export const ProductForm = () => {
         ) : (
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <ProductFormFields form={form} />
+              <ProductFormFields form={form as any} />{" "}
+              {/* Type assertion para resolver conflito */}
               <CategoryFields
-                form={form}
+                form={form as any}
                 addCategory={handleAddCategory}
-                removeCategory={handleRemoveCategory} // Prop adicionada
+                removeCategory={handleRemoveCategory}
               />
               <div className="flex justify-between gap-4 mt-6">
                 <Button
@@ -131,7 +132,6 @@ export const ProductForm = () => {
                 >
                   Cancelar
                 </Button>
-
                 <Button
                   type="submit"
                   className="w-1/2 cursor-pointer"
